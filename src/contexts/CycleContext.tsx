@@ -6,7 +6,11 @@ import {
   useReducer,
   useState,
 } from "react";
-import { ActionTypes, addNewCycleAction } from "../reducers/cycles/actions";
+import {
+  addNewCycleAction,
+  interruptCurrentCycleAction,
+  markCurrentCycleAsFinishedAction,
+} from "../reducers/cycles/actions";
 import { Cycle, cyclesReducer } from "../reducers/cycles/reducer";
 
 interface CreateCycleData {
@@ -64,7 +68,6 @@ export function CyclesContextProvider({
 
   useEffect(() => {
     const stateJSON = JSON.stringify(cyclesState);
-
     localStorage.setItem("@ignite-timer:cycles-state-1.0.0", stateJSON);
   }, [cyclesState]);
 
@@ -73,7 +76,7 @@ export function CyclesContextProvider({
   }
 
   function markCurrentCycleAsFinished() {
-    dispatch(markCurrentCycleAsFinished);
+    dispatch(markCurrentCycleAsFinishedAction());
   }
 
   function createNewCycle(data: CreateCycleData) {
@@ -92,7 +95,7 @@ export function CyclesContextProvider({
   }
 
   function interruptCurrentCycle() {
-    dispatch(interruptCurrentCycle);
+    dispatch(interruptCurrentCycleAction());
   }
 
   return (
